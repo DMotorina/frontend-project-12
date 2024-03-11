@@ -1,7 +1,10 @@
-export const MessageBox = () => {
+export const MessageBox = ({currentMessages}) => {
     return (
         <div id="message-box" className="chat-messages overflow-auto px-5">
-            Hello!
+            {currentMessages.length 
+                ? currentMessages.map((message) => message) 
+                : 'Сообщений пока нет'
+            }
         </div>
     )
 }

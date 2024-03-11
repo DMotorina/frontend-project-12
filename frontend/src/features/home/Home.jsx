@@ -34,12 +34,13 @@ export const Home = () => {
     }, [dispatch, token]);
 
     const currentChannels = useSelector((state) => state.channels.channels);
+    const currentMessages = useSelector((state) => state.messages.messages);
 
     return (
         <Container className="h-100 my-4 overflow-hidden rounded shadow">
             <Row className="h-100 bg-white flex-md-row">
                 <ChannelsHub currentChannels={currentChannels} />
-                <ChannelTrek />
+                <ChannelTrek currentChannels={currentChannels} currentMessages={currentMessages} />
             </Row>
         </Container>
     )
