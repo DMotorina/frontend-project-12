@@ -7,6 +7,7 @@ import { Header } from './features/header/Header';
 import { Home } from './features/home/Home';
 import { Login } from './features/login/Login';
 import { NotFound } from './features/404/NotFound';
+import { Signup } from './features/signup/Signup';
 
 export const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ export const AppRoutes = () => {
             )}
           />   
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Route>       
       </Routes>
