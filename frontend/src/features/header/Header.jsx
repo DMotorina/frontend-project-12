@@ -8,7 +8,7 @@ export const Header = () => {
         <Navbar className="shadow-sm" bg="white" expand="lg">
           <Container>
             <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
-            <Button>Выйти</Button>
+            <Link to="/login"><Button>Выйти</Button></Link>
           </Container>
         </Navbar>
         <Outlet />

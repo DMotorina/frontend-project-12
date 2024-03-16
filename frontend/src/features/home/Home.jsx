@@ -15,7 +15,7 @@ const socket = io();
 const getActiveChannelMessages = (messages, id) => messages.filter((message) => message.channelId === id);
 
 export const Home = () => {
-    const { token, username } = useSelector((state) => state.user);
+    const { token, username } = useSelector((state) => state.users);
 
     const dispatch = useDispatch();
 
