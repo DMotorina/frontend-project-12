@@ -162,13 +162,14 @@ export const Home = () => {
                                 </li>
                                 );
                             }
+
                             return (
                                 <Dropdown key={id} className="d-flex" as={ButtonGroup}>
                                 <button type="button" id={id} className={getClassName(id)} onClick={() => changeActiveChannel(id, name)}>
                                     <span className="me-1">#</span>
                                     {name}
                                 </button>
-                                <Dropdown.Toggle split variant={currentChannels.id === id ? 'secondary' : 'none'} id="dropdown-split-basic" />
+                                <Dropdown.Toggle split variant={activeChannel.id === id ? 'secondary' : 'none'} id="dropdown-split-basic secondary" />
                                 <Dropdown.Menu>
                                     <Dropdown.Item>Удалить</Dropdown.Item>
                                     <Dropdown.Item>Переименовать</Dropdown.Item>
