@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { Row, Container, Col, Nav, Form, Button, Modal, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Row, Container, Col, Nav, Form, Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { io } from 'socket.io-client';
 import cn from 'classnames';
 
-import { getChannels, addChannel } from '../../slices/channelsSlice';
+import { getChannels, addChannel, removeChannel } from '../../slices/channelsSlice';
 import { getMessages, addMessage } from '../../slices/messagesSlice';
 
 import { PlusIcon } from "../../assets/icons/PlusIcon";
+
+import { AddModal } from "../modal/AddModal";
+import { RemoveModal } from "../modal/RemoveModal";
 
 const socket = io();
 
@@ -16,6 +19,8 @@ const getActiveChannelMessages = (messages, id) => messages.filter((message) => 
 
 export const Home = () => {
     const { token, username } = useSelector((state) => state.users);
+    const currentChannels = useSelector((state) => state.channels.channels);
+    const currentMessages = useSelector((state) => state.messages.messages);
 
     const dispatch = useDispatch();
 
@@ -23,21 +28,10 @@ export const Home = () => {
 
     const [activeChannel, setActiveChannel] = useState({ id: '1', name: 'general' });
     const [inputMessage, setInputMessage] = useState('');
+    const [inputChannel, setInputChannel] = useState('');
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [showRemoveModal, setShowRemoveModal] = useState(false);
 
-    const changeActiveChannel = (id, name) => setActiveChannel({ id, name });
-    const handleChangeInputMessage = (event) => setInputMessage(event.target.value);
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const newMessage = { body: inputMessage, channelId: activeChannel.id, username };
-    
-        await axios.post('/api/v1/messages', newMessage, { headers: { Authorization: `Bearer ${token}` } });
-        socket.emit('newMessage', newMessage);
-    
-        setInputMessage('');
-    };
-
-    const getClassName = (id) => cn('btn w-100 rounded-0 text-start', { 'btn-secondary': activeChannel.id === id });
     
     useEffect(() => {
         const getChatChannels = async () => {
@@ -47,7 +41,6 @@ export const Home = () => {
 
         getChatChannels()
     }, [dispatch, token]);
-
 
     useEffect(() => {
         const getChatMessages = async () => {
@@ -72,19 +65,41 @@ export const Home = () => {
         getMessage();
     }, [dispatch]);
 
-    const currentChannels = useSelector((state) => state.channels.channels);
-    const currentMessages = useSelector((state) => state.messages.messages);
+    useEffect(() => {
+        socket.on('newChannel', (payload) => {
+          dispatch(addChannel(payload));
+        });
+    }, [dispatch]);
 
+    useEffect(() => {
+        socket.on('removeChannel', (payload) => {
+          dispatch(removeChannel(payload));
+        });
+      }, []);
+
+    const getClassName = (id) => cn('btn w-100 rounded-0 text-start', { 'btn-secondary': activeChannel.id === id });
     const activeChannelMessages = getActiveChannelMessages(currentMessages, activeChannel.id);
 
-    const [show, setShow] = useState(false);
+    const changeActiveChannel = (id, name) => setActiveChannel({ id, name });
+    const handleChangeInputMessage = (event) => setInputMessage(event.target.value);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShowAddModal(false);
+    const handleShow = () => setShowAddModal(true);
 
-    const [inputChannel, setInputChannel] = useState('');
+    const handleRemoveClose = () => setShowRemoveModal(false);
+    const handleRemoveShow = () => setShowRemoveModal(true);
 
     const handleChangeInputChannel = (event) => setInputChannel(event.target.value);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const newMessage = { body: inputMessage, channelId: activeChannel.id, username };
+    
+        await axios.post('/api/v1/messages', newMessage, { headers: { Authorization: `Bearer ${token}` } });
+        socket.emit('newMessage', newMessage);
+    
+        setInputMessage('');
+    };
 
     const handleChannelSubmit = async (event) => {
         event.preventDefault();
@@ -92,16 +107,20 @@ export const Home = () => {
         const newChannel = { name: inputChannel };
 
         await axios.post('/api/v1/channels', newChannel, { headers: { Authorization: `Bearer ${token}` } })
-        socket.emit('newMessage', { newChannel });
+        socket.emit('newChannel', { newChannel });
         setInputChannel('');
         handleClose()
     }
+    
+    const handleRemoveChannelSubmit = async (event) => {
+        event.preventDefault();
+        
+        const removeChannelId = activeChannel.id
 
-    useEffect(() => {
-        socket.on('newChannel', (payload) => {
-          dispatch(addChannel(payload));
-        });
-      }, []);
+        await axios.delete(`/api/v1/channels/${removeChannelId}`, { headers: { Authorization: `Bearer ${token}` } })
+        socket.emit('removeChannel');
+        handleRemoveClose()
+    }
 
     return (
         <Container className="h-100 my-4 overflow-hidden rounded shadow">
@@ -118,40 +137,18 @@ export const Home = () => {
                             <span className="visually-hidden">+</span>
                         </Button>
 
-                        <Modal 
-                            show={show} 
-                            onHide={handleClose}
-                            aria-labelledby="contained-modal-title-vcenter"
-                            centered
-                        >
-                            <Modal.Header closeButton>
-                                <Modal.Title>Добавить канал</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <Form onSubmit={handleChannelSubmit}>
-                                    <Form.Control
-                                        name="name"
-                                        id="name"
-                                        type="text"
-                                        className="mb-2 form-control"
-                                        value={inputChannel}
-                                        onChange={handleChangeInputChannel}
-                                    />
-                                    <div className="d-flex justify-content-end">
-                                        <Button className="me-2" variant="secondary" onClick={handleClose}>
-                                            Отменить
-                                        </Button>
-                                        <Button variant="primary" type="submit">
-                                            Отправить
-                                        </Button>
-                                    </div>
-                                </Form>
-                            </Modal.Body>
-                        </Modal>
+                        <AddModal 
+                            showAddModal={showAddModal} 
+                            handleClose={handleClose} 
+                            handleChannelSubmit={handleChannelSubmit} 
+                            inputChannel={inputChannel}
+                            handleChangeInputChannel={handleChangeInputChannel}
+                        />
                     </div>
 
                     <Nav className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
                         {currentChannels.map(({ id, name, removable }) => {
+                            console.log('--removable', `${name}: ${removable}`)
                             if (!removable) {
                                 return (
                                 <li key={id} className="nav-item w-100">
@@ -165,21 +162,27 @@ export const Home = () => {
 
                             return (
                                 <Dropdown key={id} className="d-flex" as={ButtonGroup}>
-                                <button type="button" id={id} className={getClassName(id)} onClick={() => changeActiveChannel(id, name)}>
-                                    <span className="me-1">#</span>
-                                    {name}
-                                </button>
-                                <Dropdown.Toggle split variant={activeChannel.id === id ? 'secondary' : 'none'} id="dropdown-split-basic secondary" />
-                                <Dropdown.Menu>
-                                    <Dropdown.Item>Удалить</Dropdown.Item>
-                                    <Dropdown.Item>Переименовать</Dropdown.Item>
-                                </Dropdown.Menu>
+                                    <button type="button" id={id} className={getClassName(id)} onClick={() => changeActiveChannel(id, name)}>
+                                        <span className="me-1">#</span>
+                                        {name}
+                                    </button>
+                                    <Dropdown.Toggle split variant={activeChannel.id === id ? 'secondary' : 'none'} id="dropdown-split-basic secondary" />
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item onClick={handleRemoveShow}>Удалить</Dropdown.Item>
+                                        <Dropdown.Item>Переименовать</Dropdown.Item>
+                                    </Dropdown.Menu>
                                 </Dropdown>
                             );
                         })}
                     </Nav>
+                    <RemoveModal 
+                            showRemoveModal={showRemoveModal} 
+                            handleRemoveClose={handleRemoveClose} 
+                            handleRemoveChannelSubmit={handleRemoveChannelSubmit} 
+                    />
                 </Col>
 
+                {/* 2 */}
                 <Col className="p-0 h-100">
                     <div className="d-flex flex-column h-100">
                         <div className="bg-light mb-4 p-3 shadow-sm small">
