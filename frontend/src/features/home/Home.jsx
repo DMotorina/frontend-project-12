@@ -77,7 +77,7 @@ export const Home = () => {
         socket.on('removeChannel', (payload) => {
           dispatch(removeChannel(payload));
         });
-      }, []);
+    }, []);
 
     const getClassName = (id) => cn('btn w-100 rounded-0 text-start', { 'btn-secondary': activeChannel.id === id });
     const activeChannelMessages = getActiveChannelMessages(currentMessages, activeChannel.id);
@@ -185,7 +185,9 @@ export const Home = () => {
                         handleRemoveChannelSubmit={handleRemoveChannelSubmit} 
                     />
 
-                    <RenameModal 
+                    <RenameModal
+                        token={token} 
+                        activeChannel={activeChannel}
                         showRenameModal={showRenameModal}
                         handleRenameClose={handleRenameClose}
                     />
