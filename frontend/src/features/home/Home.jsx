@@ -12,6 +12,7 @@ import { PlusIcon } from "../../assets/icons/PlusIcon";
 
 import { AddModal } from "../modal/AddModal";
 import { RemoveModal } from "../modal/RemoveModal";
+import { RenameModal } from "../modal/RenameModal";
 
 const socket = io();
 
@@ -31,6 +32,7 @@ export const Home = () => {
     const [inputChannel, setInputChannel] = useState('');
     const [showAddModal, setShowAddModal] = useState(false);
     const [showRemoveModal, setShowRemoveModal] = useState(false);
+    const [showRenameModal, setShowRenameModal] = useState(false);
 
     
     useEffect(() => {
@@ -88,6 +90,9 @@ export const Home = () => {
 
     const handleRemoveClose = () => setShowRemoveModal(false);
     const handleRemoveShow = () => setShowRemoveModal(true);
+
+    const handleRenameClose = () => setShowRenameModal(false);
+    const handleRenameShow = () => setShowRenameModal(true);
 
     const handleChangeInputChannel = (event) => setInputChannel(event.target.value);
 
@@ -148,7 +153,6 @@ export const Home = () => {
 
                     <Nav className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
                         {currentChannels.map(({ id, name, removable }) => {
-                            console.log('--removable', `${name}: ${removable}`)
                             if (!removable) {
                                 return (
                                 <li key={id} className="nav-item w-100">
@@ -169,16 +173,21 @@ export const Home = () => {
                                     <Dropdown.Toggle split variant={activeChannel.id === id ? 'secondary' : 'none'} id="dropdown-split-basic secondary" />
                                     <Dropdown.Menu>
                                         <Dropdown.Item onClick={handleRemoveShow}>Удалить</Dropdown.Item>
-                                        <Dropdown.Item>Переименовать</Dropdown.Item>
+                                        <Dropdown.Item onClick={handleRenameShow}>Переименовать</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
                             );
                         })}
                     </Nav>
                     <RemoveModal 
-                            showRemoveModal={showRemoveModal} 
-                            handleRemoveClose={handleRemoveClose} 
-                            handleRemoveChannelSubmit={handleRemoveChannelSubmit} 
+                        showRemoveModal={showRemoveModal} 
+                        handleRemoveClose={handleRemoveClose} 
+                        handleRemoveChannelSubmit={handleRemoveChannelSubmit} 
+                    />
+
+                    <RenameModal 
+                        showRenameModal={showRenameModal}
+                        handleRenameClose={handleRenameClose}
                     />
                 </Col>
 
