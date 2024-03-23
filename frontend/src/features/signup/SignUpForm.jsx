@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
@@ -6,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 
 import { setCredentials } from '../../slices/usersSlice';
 
@@ -52,6 +54,7 @@ export const SignUpForm = () => {
         localStorage.setItem('userId', JSON.stringify(res.data));
         navigate('/');
       } catch (e) {
+        toast.error(t('toast.dataLoadingError'));
         setValidated(true);
       }
     },

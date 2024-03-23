@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -5,6 +6,7 @@ import { Row, Container, Col, Nav, Form, Button, Dropdown, ButtonGroup } from 'r
 import { io } from 'socket.io-client';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import { getChannels, addChannel, removeChannel } from '../../slices/channelsSlice';
 import { getMessages, addMessage } from '../../slices/messagesSlice';
@@ -117,6 +119,7 @@ export const Home = () => {
         await axios.post('/api/v1/channels', newChannel, { headers: { Authorization: `Bearer ${token}` } })
         socket.emit('newChannel', { newChannel });
         setInputChannel('');
+        toast.success(t('toast.createChannel'));
         handleClose()
     }
     
@@ -126,6 +129,7 @@ export const Home = () => {
         const removeChannelId = activeChannel.id
 
         await axios.delete(`/api/v1/channels/${removeChannelId}`, { headers: { Authorization: `Bearer ${token}` } })
+        toast.success(t('toast.removeChannel'));
         socket.emit('removeChannel');
         handleRemoveClose()
     }

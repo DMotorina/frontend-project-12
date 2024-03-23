@@ -1,8 +1,10 @@
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import { useFormik } from "formik";
 
@@ -37,6 +39,7 @@ export const LoginForm = () => {
         setValidated(false);
         navigate('/');
       } catch(err) {
+        toast.error(t('toast.аuthorisationError'));
         setValidated(true);
       }
   }})

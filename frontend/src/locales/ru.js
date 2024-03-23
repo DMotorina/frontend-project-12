@@ -47,6 +47,13 @@ export default {
     errors: {
       loginError: 'Неверные имя пользователя или пароль',
       userExist: 'Пользователь уже существует!'
-    }
+    },
+    toast: {
+      createChannel: 'Канал создан',
+      removeChannel: 'Канал удалён',
+      renamedChannel: 'Канал переименован',
+      dataLoadingError: 'Ошибка загрузки данных',
+      аuthorisationError: 'Ошибка авторизации',
+    },
   },
 };
