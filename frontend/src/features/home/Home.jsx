@@ -7,6 +7,7 @@ import { io } from 'socket.io-client';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 
 import { getChannels, addChannel, removeChannel } from '../../slices/channelsSlice';
 import { getMessages, addMessage } from '../../slices/messagesSlice';
@@ -103,7 +104,7 @@ export const Home = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const newMessage = { body: inputMessage, channelId: activeChannel.id, username };
+        const newMessage = { body: leoProfanity.clean(inputMessage), channelId: activeChannel.id, username };
     
         await axios.post('/api/v1/messages', newMessage, { headers: { Authorization: `Bearer ${token}` } });
         socket.emit('newMessage', newMessage);
