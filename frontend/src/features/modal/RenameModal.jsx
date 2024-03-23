@@ -5,6 +5,8 @@ import { Form, Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
+
 
 import {updateChannel} from '../../slices/channelsSlice'
 
@@ -26,8 +28,10 @@ export const RenameModal = ({
             name: activeChannel.name,
         },
         onSubmit: async (values) => {
+            const editedChannel = {name: leoProfanity.clean(values.name)}
+
           try {
-            await axios.patch(`/api/v1/channels/${activeChannel.id}`, values, { headers: { Authorization: `Bearer ${token}` } });
+            await axios.patch(`/api/v1/channels/${activeChannel.id}`, editedChannel, { headers: { Authorization: `Bearer ${token}` } });
             socket.emit('renameChannel');
             handleRenameClose();
             toast.success(t('toast.renamedChannel'));

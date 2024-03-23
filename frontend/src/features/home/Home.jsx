@@ -114,8 +114,8 @@ export const Home = () => {
 
     const handleChannelSubmit = async (event) => {
         event.preventDefault();
-
-        const newChannel = { name: inputChannel };
+        
+        const newChannel = { name: leoProfanity.clean(inputChannel) };
 
         await axios.post('/api/v1/channels', newChannel, { headers: { Authorization: `Bearer ${token}` } })
         socket.emit('newChannel', { newChannel });
