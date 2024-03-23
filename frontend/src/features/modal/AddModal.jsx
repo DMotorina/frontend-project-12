@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Button, Modal } from 'react-bootstrap';
-
+import { useTranslation } from 'react-i18next';
 
 export const AddModal = ({
     showAddModal, 
@@ -9,6 +9,8 @@ export const AddModal = ({
     inputChannel, 
     handleChangeInputChannel
 }) => {
+    const { t } = useTranslation();
+
     return (
         <Modal 
         show={showAddModal} 
@@ -17,7 +19,7 @@ export const AddModal = ({
         centered
     >
         <Modal.Header closeButton>
-            <Modal.Title>Добавить канал</Modal.Title>
+            <Modal.Title>{t('modals.addModal.addChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Form onSubmit={handleChannelSubmit}>
@@ -31,10 +33,10 @@ export const AddModal = ({
                 />
                 <div className="d-flex justify-content-end">
                     <Button className="me-2" variant="secondary" onClick={handleClose}>
-                        Отменить
+                        {t('modals.buttons.cancel')}
                     </Button>
                     <Button variant="primary" type="submit">
-                        Отправить
+                        {t('modals.buttons.send')}
                     </Button>
                 </div>
             </Form>

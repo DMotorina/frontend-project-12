@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 import { useFormik } from "formik";
 
@@ -10,6 +11,8 @@ import axios from 'axios';
 import { setCredentials } from '../../slices/usersSlice';
 
 export const LoginForm = () => {
+  const { t } = useTranslation();
+
   const inputUsernameElem = useRef(null);
 
   useEffect(() => {
@@ -40,7 +43,7 @@ export const LoginForm = () => {
 
   return (
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-      <h1 className="text-center mb-4">Войти</h1>
+      <h1 className="text-center mb-4">{t('buttons.enter')}</h1>
       <Form.Floating className="mb-3">
         <Form.Control
           isInvalid={validated}
@@ -49,12 +52,12 @@ export const LoginForm = () => {
           autoComplete="username"
           required
           type="text"
-          placeholder="Ваш ник"
+          placeholder={t('pages.login.nickname')}
           value={formik.values.username}
           onChange={formik.handleChange}
           ref={inputUsernameElem}
         />
-        <Form.Label htmlFor="username">Ваш ник</Form.Label>
+        <Form.Label htmlFor="username">{t('pages.login.nickname')}</Form.Label>
       </Form.Floating>
       <Form.Floating className="mb-3">
         <Form.Control
@@ -64,14 +67,21 @@ export const LoginForm = () => {
           autoComplete="current-password"
           required
           type="password"
-          placeholder="Пароль"
+          placeholder={t('pages.login.password')}
           value={formik.values.password}
           onChange={formik.handleChange}
         />
-        <Form.Label htmlFor="password">Пароль</Form.Label>
-        <div className="invalid-tooltip">Неверные имя пользователя или пароль</div>
+        <Form.Label htmlFor="password">{t('pages.login.password')}</Form.Label>
+        <div className="invalid-tooltip">{t('errors.loginError')}</div>
       </Form.Floating>
-      <Button disabled={formik.isSubmitting} variant="outline-primary" type="submit" className="w-100 mb-3">Войти</Button>
+      <Button 
+        disabled={formik.isSubmitting} 
+        variant="outline-primary" 
+        type="submit" 
+        className="w-100 mb-3"
+      >
+        {t('buttons.enter')}
+      </Button>
     </Form>
   );
 };

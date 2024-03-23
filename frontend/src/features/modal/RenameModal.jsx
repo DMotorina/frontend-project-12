@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from 'react-redux';
-
 import { Form, Button, Modal } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 
 import {updateChannel} from '../../slices/channelsSlice'
@@ -17,6 +17,8 @@ export const RenameModal = ({
     showRenameModal, 
     handleRenameClose, 
 }) => {
+    const { t } = useTranslation();
+
     const formik = useFormik({
         initialValues: {
             name: activeChannel.name,
@@ -46,32 +48,48 @@ export const RenameModal = ({
     
     return (
         <Modal 
-        show={showRenameModal} 
-        onHide={handleRenameClose}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-    >
-        <Modal.Header closeButton>
-            <Modal.Title>Переименовать канал</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <Form onSubmit={formik.handleSubmit}>
-                <Form.Group>
-                <Form.Control
-                    required
-                    data-testid="input-body"
-                    name="name"
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                />
-                </Form.Group>
-                <Form.Label visuallyHidden htmlFor="name">Имя канала</Form.Label>
-                <div className="d-flex justify-content-end">
-                <Button onClick={handleRenameClose} type="button" className="btn-secondary mt-2 me-2">Отменить</Button>
-                <Button type="submit" className="btn-primary mt-2">Отправить</Button>
-                </div>
-            </Form>
-        </Modal.Body>
-    </Modal>
+            show={showRenameModal} 
+            onHide={handleRenameClose}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton>
+                <Modal.Title>{t('modals.renameModal.renameChannel')}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form onSubmit={formik.handleSubmit}>
+                    <Form.Group>
+                    <Form.Control
+                        required
+                        data-testid="input-body"
+                        name="name"
+                        onChange={formik.handleChange}
+                        value={formik.values.name}
+                    />
+                    </Form.Group>
+                    <Form.Label 
+                        visuallyHidden 
+                        htmlFor="name"
+                    >
+                        {t('modals.renameModal.nameOfChannel')}
+                    </Form.Label>
+                    <div className="d-flex justify-content-end">
+                    <Button 
+                        onClick={handleRenameClose} 
+                        type="button" 
+                        className="btn-secondary mt-2 me-2"
+                    >
+                        {t('modals.buttons.cancel')}
+                    </Button>
+                    <Button 
+                        type="submit" 
+                        className="btn-primary mt-2"
+                    >
+                        {t('modals.buttons.rename')}
+                    </Button>
+                    </div>
+                </Form>
+            </Modal.Body>
+        </Modal>
     )
 }

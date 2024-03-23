@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Button, Modal } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 export const RemoveModal = ({    
     showRemoveModal, 
     handleRemoveClose, 
     handleRemoveChannelSubmit, 
 }) => {
+    const { t } = useTranslation();
+
     return (
         <Modal 
         show={showRemoveModal} 
@@ -14,18 +17,18 @@ export const RemoveModal = ({
         centered
     >
         <Modal.Header closeButton>
-            <Modal.Title>Удалить канал</Modal.Title>
+            <Modal.Title>{t('modals.removeModal.removeChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Form onSubmit={handleRemoveChannelSubmit}>
-                Уверены?
+                {t('modals.removeModal.areYouSure')}
 
                 <div className="d-flex justify-content-end">
                     <Button className="me-2" variant="secondary" onClick={handleRemoveClose}>
-                        Отменить
+                        {t('modals.buttons.cancel')}
                     </Button>
                     <Button variant="danger" type="submit">
-                        Удалить
+                        {t('modals.buttons.remove')}
                     </Button>
                 </div>
             </Form>

@@ -1,13 +1,15 @@
 import React from "react";
 import {  Link } from 'react-router-dom';
-
 import { Row, Container, Col, Card, Image } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 import { LoginForm } from "./LoginForm"
 
 import logo from '../../assets/img/login-image.jpeg'
 
 export const Login = () => {
+    const { t } = useTranslation();
+
     return (
         <Container fluid className="h-100">
             <Row className="justify-content-center align-content-center h-100">
@@ -21,8 +23,8 @@ export const Login = () => {
                     </Card.Body>
                     <Card.Footer className="p-4">
                         <div className="text-center">
-                        <span>Нет аккаунта? </span>
-                        <Link to="/signup">Регистрация</Link>
+                        <span>{t('pages.login.noExistingAccount')}</span>
+                        <Link to="/signup">{t('pages.login.registration')}</Link>
                         </div>
                     </Card.Footer>
                     </Card>
