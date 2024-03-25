@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useRollbar } from '@rollbar/react';
 
 import { useFormik } from "formik";
 
@@ -14,6 +15,7 @@ import { setCredentials } from '../../slices/usersSlice';
 
 export const LoginForm = () => {
   const { t } = useTranslation();
+  const rollbar = useRollbar();
 
   const inputUsernameElem = useRef(null);
 
@@ -37,6 +39,7 @@ export const LoginForm = () => {
         dispatch(setCredentials(res.data));
         localStorage.setItem('userId', JSON.stringify(res.data));
         setValidated(false);
+        rollbar.info(`${res.data.username} logged in`);
         navigate('/');
       } catch(err) {
         toast.error(t('toast.аuthorisationError'));
