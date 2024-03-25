@@ -22,8 +22,6 @@ export default async () => {
   };
 
 
-  fefeawfaedsfasedfaeafefeda
-
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
