@@ -8,13 +8,11 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
-import { useRollbar } from '@rollbar/react';
 
 import { setCredentials } from '../../slices/usersSlice';
 
 export const SignUpForm = () => {
   const { t } = useTranslation();
-  const rollbar = useRollbar();
 
   const [validated, setValidated] = useState(false);
 
@@ -54,7 +52,6 @@ export const SignUpForm = () => {
         const res = await axios.post('api/v1/signup', values);
         dispatch(setCredentials(res.data));
         localStorage.setItem('userId', JSON.stringify(res.data));
-        rollbar.info(`${res.data.username} logged in`);
         navigate('/');
       } catch (e) {
         toast.error(t('toast.dataLoadingError'));
