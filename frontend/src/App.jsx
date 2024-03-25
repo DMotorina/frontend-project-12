@@ -6,21 +6,18 @@ import initI18next from './initI18next';
 import leoProfanity from 'leo-profanity';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
+const rollbarConfig = {
+  accessToken: 'POST_CLIENT_ITEM_ACCESS_TOKEN',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+  environment: 'production',
+} 
+
+const ruDict = leoProfanity.getDictionary('ru');
+leoProfanity.add(ruDict);
+
 export default async () => {
   await initI18next();
-
-  const ruDict = leoProfanity.getDictionary('ru');
-  leoProfanity.add(ruDict);
-
-  const rollbarConfig = {
-    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
-    payload: {
-      environment: 'production',
-    },
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-  };
-
 
   return (
     <RollbarProvider config={rollbarConfig}>
