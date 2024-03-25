@@ -21,6 +21,9 @@ export default async () => {
     captureUnhandledRejections: true,
   };
 
+
+  fefeawfaedsfasedfaeafefeda
+
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
