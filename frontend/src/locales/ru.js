@@ -20,6 +20,11 @@ export default {
         checkPassword: 'Подтвердите пароль',
         register: 'Зарегистрироваться'
       },
+      notFound: {
+        toHomePage: 'на главную страницу',
+        notFound: 'Страница не найдена',
+        youCanGo: 'Но вы можете перейти',    
+      }
     },
     modals: {
       addModal: {

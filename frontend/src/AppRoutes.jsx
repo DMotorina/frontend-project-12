@@ -9,7 +9,7 @@ import { PrivateOutlet } from './shared/outlets/private';
 import { Header } from './features/header/Header';
 import { Home } from './features/home/Home';
 import { Login } from './features/login/Login';
-import { NotFound } from './features/404/NotFound';
+import NotFound from './features/404/NotFound';
 import { Signup } from './features/signup/Signup';
 
 export const AppRoutes = () => {
