@@ -3,7 +3,6 @@ import usersReducer from './slices/usersSlice'
 import channelsReducer from './slices/channelsSlice'
 import messagesReducer from './slices/messagesSlice'
 
-
 export const store = configureStore({
   reducer: {
     users: usersReducer,
@@ -11,5 +10,3 @@ export const store = configureStore({
     messages: messagesReducer,
   },
 })
-
-export default store;

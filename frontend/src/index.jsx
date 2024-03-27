@@ -1,11 +1,12 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css';
-import App from './App';
 
-const init = async () => {
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { App } from './App';
+
+const index = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(await App());
 };
 
-init();
+index();

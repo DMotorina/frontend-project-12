@@ -1,18 +1,21 @@
-import { AppRoutes } from './AppRoutes'
-import { Provider as StoreProvider } from 'react-redux'
-import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import initI18next from './initI18next';
-import leoProfanity from 'leo-profanity';
+
+import { Provider as StoreProvider } from 'react-redux'
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import leoProfanity from 'leo-profanity';
 
-import rollbarConfig from './rollbar/rollbarConfig';
+import { initI18next } from './initI18next';
+import { AppRoutes } from './AppRoutes'
+import { rollbarConfig } from './rollbar/rollbarConfig';
+import { ruDict, enDict } from './locales/dict';
 
-export default async () => {
+import { store } from './store'
+
+export const App = async () => {
   await initI18next();
 
-  const ruDict = leoProfanity.getDictionary('ru');
   leoProfanity.add(ruDict);
+  leoProfanity.add(enDict);
 
   return (
     <RollbarProvider config={rollbarConfig}>
