@@ -9,7 +9,7 @@ import axios from 'axios';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 
-import { setCredentials } from '../../slices/usersSlice';
+import { setCredentials } from '../../../slices/usersSlice';
 
 export const SignUpForm = () => {
   const { t } = useTranslation();

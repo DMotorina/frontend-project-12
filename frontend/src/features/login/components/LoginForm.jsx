@@ -10,7 +10,7 @@ import { useFormik } from "formik";
 
 import axios from 'axios';
 
-import { setCredentials } from '../../slices/usersSlice';
+import { setCredentials } from '../../../slices/usersSlice';
 
 export const LoginForm = () => {
   const { t } = useTranslation();

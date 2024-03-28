@@ -3,7 +3,7 @@ import {  Link } from 'react-router-dom';
 import { Row, Container, Col, Card, Image } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-import { LoginForm } from "./LoginForm"
+import { LoginForm } from "./components/LoginForm"
 
 import logo from '../../assets/img/login-image.jpeg'
 

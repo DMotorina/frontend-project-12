@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import image from '../../assets/img/signup-img.jpg';
 
-import { SignUpForm } from './SignUpForm';
+import { SignUpForm } from './components/SignUpForm';
 
 export const Signup = () => {
   const { t } = useTranslation();
