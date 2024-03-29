@@ -9,7 +9,7 @@ import { AppRoutes } from './AppRoutes'
 import { rollbarConfig } from './rollbar/rollbarConfig';
 import { ruDict, enDict } from './locales/dict';
 
-import { store } from './store'
+import { store } from './slices/store'
 
 export const App = async () => {
   await initI18next();
