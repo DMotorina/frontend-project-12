@@ -17,6 +17,7 @@ import { PlusIcon } from "../../assets/icons/PlusIcon";
 import { AddModal } from "../modal/AddModal";
 import { RemoveModal } from "../modal/RemoveModal";
 import { RenameModal } from "../modal/RenameModal";
+import Channel from './Channel';
 
 const socket = io();
 
@@ -160,53 +161,17 @@ export const Home = () => {
                     </div>
 
                     <Nav className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-                        {currentChannels.map(({ id, name, removable }) => {
-                            if (!removable) {
-                                return (
-                                <li key={id} className="nav-item w-100">
-                                    <button 
-                                        id={id} 
-                                        type="button" 
-                                        className={getClassName(id)} 
-                                        onClick={() => changeActiveChannel(id, name)}
-                                    >
-                                    <span className="me-1">#</span>
-                                    {name}
-                                    </button>
-                                </li>
-                                );
-                            }
-
+                        {currentChannels.map((channel) => {
                             return (
-                                <Dropdown key={id} className="d-flex" as={ButtonGroup}>
-                                    <button 
-                                        type="button" 
-                                        id={id} 
-                                        className={getClassName(id)} 
-                                        onClick={() => changeActiveChannel(id, name)}
-                                    >
-                                        <span className="me-1">#</span>
-                                        {name}
-                                    </button>
-                                    <Dropdown.Toggle 
-                                        split 
-                                        variant={activeChannel.id === id ? 'secondary' : 'none'} 
-                                        id="dropdown-split-basic secondary" 
-                                    />
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item 
-                                            onClick={handleRemoveShow}
-                                        >
-                                            {t('modals.buttons.remove')}
-                                        </Dropdown.Item>
-                                        <Dropdown.Item 
-                                            onClick={handleRenameShow}
-                                        >
-                                            {t('modals.buttons.rename')}
-                                        </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown>
-                            );
+                                <Channel 
+                                    channel={channel}
+                                    getClassName={getClassName} 
+                                    changeActiveChannel={changeActiveChannel}
+                                    activeChannel={activeChannel}
+                                    handleRemoveShow={handleRemoveShow}
+                                    handleRenameShow={handleRenameShow}
+                                />
+                            )
                         })}
                     </Nav>
                     <RemoveModal 
