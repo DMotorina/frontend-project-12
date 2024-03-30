@@ -1,18 +1,18 @@
 import 'react-toastify/dist/ReactToastify.css';
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { useFormik } from "formik";
+import { useFormik } from 'formik';
 
 import axios from 'axios';
 
 import { setCredentials } from '../../../slices/usersSlice';
 
-export const LoginForm = () => {
+const LoginForm = () => {
   const { t } = useTranslation();
 
   const inputUsernameElem = useRef(null);
@@ -38,11 +38,12 @@ export const LoginForm = () => {
         localStorage.setItem('userId', JSON.stringify(res.data));
         setValidated(false);
         navigate('/');
-      } catch(err) {
+      } catch (err) {
         toast.error(t('toast.аuthorisationError'));
         setValidated(true);
       }
-  }})
+    },
+  });
 
   return (
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
@@ -77,10 +78,10 @@ export const LoginForm = () => {
         <Form.Label htmlFor="password">{t('pages.login.password')}</Form.Label>
         <div className="invalid-tooltip">{t('errors.loginError')}</div>
       </Form.Floating>
-      <Button 
-        disabled={formik.isSubmitting} 
-        variant="outline-primary" 
-        type="submit" 
+      <Button
+        disabled={formik.isSubmitting}
+        variant="outline-primary"
+        type="submit"
         className="w-100 mb-3"
       >
         {t('buttons.enter')}
@@ -88,3 +89,5 @@ export const LoginForm = () => {
     </Form>
   );
 };
+
+export default LoginForm;

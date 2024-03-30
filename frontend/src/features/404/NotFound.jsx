@@ -12,7 +12,7 @@ const NotFound = () => {
       <p className="text-muted">
         {t('pages.notFound.youCanGo')}
         {' '}
-        <a href='/'>{t('pages.notFound.toHomePage')}</a>
+        <a href="/">{t('pages.notFound.toHomePage')}</a>
       </p>
     </div>
   );

@@ -1,12 +1,14 @@
 import React from 'react';
-import { Row, Container, Col, Card, Image } from 'react-bootstrap';
+import {
+  Row, Container, Col, Card, Image,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 import image from '../../assets/img/signup-img.jpg';
 
-import { SignUpForm } from './components/SignUpForm';
+import SignUpForm from './components/SignUpForm';
 
-export const Signup = () => {
+const Signup = () => {
   const { t } = useTranslation();
 
   return (
@@ -22,5 +24,7 @@ export const Signup = () => {
         </Col>
       </Row>
     </Container>
-  )
+  );
 };
+
+export default Signup;

@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 
 import { setCredentials } from '../../../slices/usersSlice';
 
-export const SignUpForm = () => {
+const SignUpForm = () => {
   const { t } = useTranslation();
 
   const [validated, setValidated] = useState(false);
@@ -105,17 +105,16 @@ export const SignUpForm = () => {
           isInvalid={(formik.errors.confirmPassword && formik.touched.confirmPassword) || validated}
         />
         <Form.Label htmlFor="username">{t('pages.signup.checkPassword')}</Form.Label>
-        
+
         {formik.errors.confirmPassword && formik.touched.confirmPassword
           ? (<Form.Control.Feedback type="invalid" tooltip>{formik.errors.confirmPassword}</Form.Control.Feedback>)
-          : (<Form.Control.Feedback type="invalid" tooltip>{t('errors.userExist')}</Form.Control.Feedback>)
-        }
+          : (<Form.Control.Feedback type="invalid" tooltip>{t('errors.userExist')}</Form.Control.Feedback>)}
       </Form.Floating>
 
-      <Button 
-        disabled={formik.isSubmitting} 
-        variant="outline-primary" 
-        type="submit" 
+      <Button
+        disabled={formik.isSubmitting}
+        variant="outline-primary"
+        type="submit"
         className="w-100 mb-3"
       >
         {t('pages.signup.register')}
@@ -123,3 +122,5 @@ export const SignUpForm = () => {
     </Form>
   );
 };
+
+export default SignUpForm;

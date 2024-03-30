@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 
 import resources from './locales/index.js';
 
-export const initI18next = async () => {
+const initI18next = async () => {
   const i18n = i18next.createInstance();
 
   await i18n
@@ -16,3 +16,5 @@ export const initI18next = async () => {
       },
     });
 };
+
+export default initI18next;

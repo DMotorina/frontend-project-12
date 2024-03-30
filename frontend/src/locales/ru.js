@@ -18,13 +18,13 @@ export default {
         userName: 'Имя пользователя',
         password: 'Пароль',
         checkPassword: 'Подтвердите пароль',
-        register: 'Зарегистрироваться'
+        register: 'Зарегистрироваться',
       },
       notFound: {
         toHomePage: 'на главную страницу',
         notFound: 'Страница не найдена',
-        youCanGo: 'Но вы можете перейти',    
-      }
+        youCanGo: 'Но вы можете перейти',
+      },
     },
     modals: {
       addModal: {
@@ -43,15 +43,15 @@ export default {
         send: 'Отправить',
         remove: 'Удалить',
         rename: 'Переименовать',
-      }
+      },
     },
     buttons: {
       enter: 'Войти',
       exit: 'Выйти',
-    }, 
+    },
     errors: {
       loginError: 'Неверные имя пользователя или пароль',
-      userExist: 'Пользователь уже существует!'
+      userExist: 'Пользователь уже существует!',
     },
     toast: {
       createChannel: 'Канал создан',
