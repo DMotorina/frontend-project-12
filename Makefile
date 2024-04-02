@@ -15,3 +15,7 @@ start:
 
 publish:
 	npm publish --dry-run
+
+build:
+	rm frontend/build -rf
+	npm run build
