@@ -60,5 +60,9 @@ export default {
       dataLoadingError: 'Ошибка загрузки данных',
       аuthorisationError: 'Ошибка авторизации',
     },
+    required: 'Обязательное поле',
+    min: 'От 3 до 20 символов',
+    max: 'От 3 до 20 символов',
+    duplicate: 'Должно быть уникальным',
   },
 };

@@ -82,6 +82,7 @@ const ChannelComponent = ({
         </Button>
 
         <AddModal
+          token={token}
           showAddModal={showAddModal}
           handleClose={handleClose}
           handleChannelSubmit={handleChannelSubmit}
