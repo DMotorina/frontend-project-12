@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+
 import leoProfanity from 'leo-profanity';
 import axios from 'axios';
 import { io } from 'socket.io-client';
@@ -19,8 +21,10 @@ import PlusIcon from '../../../../assets/icons/PlusIcon';
 const socket = io();
 
 const ChannelComponent = ({
-  currentChannels, activeChannel, token, setActiveChannel,
+  currentChannels, activeChannel, setActiveChannel,
 }) => {
+  const { token } = useSelector((state) => state.users);
+
   const { t } = useTranslation();
 
   const [inputChannel, setInputChannel] = useState('');
@@ -82,7 +86,6 @@ const ChannelComponent = ({
         </Button>
 
         <AddModal
-          token={token}
           showAddModal={showAddModal}
           handleClose={handleClose}
           handleChannelSubmit={handleChannelSubmit}
@@ -110,7 +113,6 @@ const ChannelComponent = ({
       />
 
       <RenameModal
-        token={token}
         activeChannel={activeChannel}
         showRenameModal={showRenameModal}
         handleRenameClose={handleRenameClose}

@@ -23,10 +23,10 @@ const validationChannelsSchema = (channels, text) => yup.object().shape({
 const socket = io();
 
 const AddModal = ({
-  token,
   showAddModal,
   handleClose,
 }) => {
+  const { token } = useSelector((state) => state.users);
   const { t } = useTranslation();
   const channels = useSelector((state) => state.channels.channels);
   const channelsName = channels.map((channel) => channel.name);

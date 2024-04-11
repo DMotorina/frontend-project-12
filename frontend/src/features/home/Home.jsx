@@ -100,7 +100,6 @@ const Home = () => {
         <ChannelComponent
           currentChannels={currentChannels}
           activeChannel={activeChannel}
-          token={token}
           setActiveChannel={setActiveChannel}
         />
         <MessageComponent

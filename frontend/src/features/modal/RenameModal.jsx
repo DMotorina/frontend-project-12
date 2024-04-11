@@ -1,6 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Form, Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
@@ -14,12 +14,13 @@ import { updateChannel } from '../../slices/channelsSlice';
 const socket = io();
 
 const RenameModal = ({
-  token,
   activeChannel,
   showRenameModal,
   handleRenameClose,
 }) => {
   const { t } = useTranslation();
+
+  const { token } = useSelector((state) => state.users);
 
   const formik = useFormik({
     initialValues: {
