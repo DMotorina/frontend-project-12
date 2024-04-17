@@ -5,14 +5,15 @@ import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import axios from 'axios';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
-
+import routes from '../../../routes.js';
+import useApi from '../../../hooks/useApi.js';
 import { setCredentials } from '../../../slices/usersSlice';
 
 const SignUpForm = () => {
   const { t } = useTranslation();
+  const api = useApi();
 
   const [validated, setValidated] = useState(false);
 
@@ -49,10 +50,9 @@ const SignUpForm = () => {
       setValidated(false);
 
       try {
-        const res = await axios.post('api/v1/signup', values);
-        dispatch(setCredentials(res.data));
-        localStorage.setItem('userId', JSON.stringify(res.data));
-        navigate('/');
+        const res = await api.signupUser(values);
+        dispatch(setCredentials(res));
+        navigate(routes.chatPage());
       } catch (e) {
         toast.error(t('toast.dataLoadingError'));
         setValidated(true);

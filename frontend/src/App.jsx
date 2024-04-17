@@ -9,7 +9,7 @@ import resources from './locales/index.js';
 import AppRoutes from './AppRoutes';
 import rollbarConfig from './rollbar/rollbarConfig';
 import { ruDict, enDict } from './locales/dict';
-
+import ApiProvider from './context/ApiProvider.jsx';
 import store from './store';
 
 const App = async () => {
@@ -31,11 +31,13 @@ const App = async () => {
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
-        <I18nextProvider i18n={i18n}>
-          <Provider store={store}>
-            <AppRoutes />
-          </Provider>
-        </I18nextProvider>
+        <Provider store={store}>
+          <I18nextProvider i18n={i18n}>
+            <ApiProvider>
+              <AppRoutes />
+            </ApiProvider>
+          </I18nextProvider>
+        </Provider>
       </ErrorBoundary>
     </RollbarProvider>
   );
