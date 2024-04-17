@@ -1,32 +1,43 @@
 import 'react-toastify/dist/ReactToastify.css';
 
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import {
+  BrowserRouter, Navigate, Routes, Route, useLocation,
+} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-
-import PrivateOutlet from './shared/outlets/private';
 
 import Header from './features/header/Header';
 import Home from './features/home/Home';
 import Login from './features/login/Login';
 import NotFound from './features/404/NotFound';
 import Signup from './features/signup/Signup';
+import routes from './routes';
+
+const PrivateRoute = ({ children }) => {
+  const { token } = useSelector((state) => state.user);
+  const location = useLocation();
+
+  return (
+    token ? children : <Navigate to={routes.loginPage()} state={{ from: location }} />
+  );
+};
 
 const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Header />}>
+      <Route path={routes.chatPage()} element={<Header />}>
         <Route
           index
           element={(
-            <PrivateOutlet>
+            <PrivateRoute>
               <Home />
-            </PrivateOutlet>
+            </PrivateRoute>
             )}
         />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path={routes.loginPage()} element={<Login />} />
+        <Route path={routes.signupPage()} element={<Signup />} />
+        <Route path={routes.randomPagePath()} element={<NotFound />} />
       </Route>
     </Routes>
     <ToastContainer
