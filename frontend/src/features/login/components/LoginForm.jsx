@@ -1,30 +1,32 @@
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-
 import { useFormik } from 'formik';
-
-import axios from 'axios';
+import useApi from '../../../hooks/useApi.js';
 
 import { setCredentials } from '../../../slices/usersSlice';
+import routes from '../../../routes.js';
 
 const LoginForm = () => {
   const { t } = useTranslation();
 
-  const inputUsernameElem = useRef(null);
-
-  useEffect(() => {
-    inputUsernameElem.current.focus();
-  }, []);
-
-  const [validated, setValidated] = useState(false);
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const api = useApi();
+
+  const location = useLocation();
+  const path = location.state === null ? routes.chatPage() : location.state.from;
+
+  const inputUsername = useRef(null);
+  useEffect(() => {
+    inputUsername.current.focus();
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -32,15 +34,20 @@ const LoginForm = () => {
       password: '',
     },
     onSubmit: async (values) => {
+      setIsInvalid(false);
+
       try {
-        const res = await axios.post('/api/v1/login', values);
-        dispatch(setCredentials(res.data));
-        localStorage.setItem('userId', JSON.stringify(res.data));
-        setValidated(false);
-        navigate('/');
+        const res = await api.loginUser(values);
+        dispatch(setCredentials(res));
+        navigate(path);
       } catch (err) {
-        toast.error(t('toast.аuthorisationError'));
-        setValidated(true);
+        setIsInvalid(true);
+
+        if (err.response.status === 401) {
+          setErrorMessage(t('errors.loginError'));
+        } else {
+          setErrorMessage(t('errors.networkError'));
+        }
       }
     },
   });
@@ -50,7 +57,7 @@ const LoginForm = () => {
       <h1 className="text-center mb-4">{t('buttons.enter')}</h1>
       <Form.Floating className="mb-3">
         <Form.Control
-          isInvalid={validated}
+          isInvalid={isInvalid}
           name="username"
           id="username"
           autoComplete="username"
@@ -59,13 +66,13 @@ const LoginForm = () => {
           placeholder={t('pages.login.nickname')}
           value={formik.values.username}
           onChange={formik.handleChange}
-          ref={inputUsernameElem}
+          ref={inputUsername}
         />
         <Form.Label htmlFor="username">{t('pages.login.nickname')}</Form.Label>
       </Form.Floating>
       <Form.Floating className="mb-3">
         <Form.Control
-          isInvalid={validated}
+          isInvalid={isInvalid}
           name="password"
           id="password"
           autoComplete="current-password"
@@ -76,7 +83,7 @@ const LoginForm = () => {
           onChange={formik.handleChange}
         />
         <Form.Label htmlFor="password">{t('pages.login.password')}</Form.Label>
-        <div className="invalid-tooltip">{t('errors.loginError')}</div>
+        <div className="invalid-tooltip">{errorMessage}</div>
       </Form.Floating>
       <Button
         disabled={formik.isSubmitting}

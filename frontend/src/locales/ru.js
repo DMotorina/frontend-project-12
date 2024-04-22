@@ -52,6 +52,7 @@ export default {
     errors: {
       loginError: 'Неверные имя пользователя или пароль',
       userExist: 'Пользователь уже существует!',
+      networkError: 'Ошибка соединения',
     },
     toast: {
       createChannel: 'Канал создан',
