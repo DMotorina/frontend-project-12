@@ -1,99 +1,94 @@
-import 'react-toastify/dist/ReactToastify.css';
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Form, Button, Modal } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { toast } from 'react-toastify';
-import leoProfanity from 'leo-profanity';
+import { Modal, Button, Form } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
-import axios from 'axios';
-import { io } from 'socket.io-client';
-import { updateChannel } from '../../slices/channelsSlice';
+import * as yup from 'yup';
 
-const socket = io();
+import useApi from '../../hooks/useApi.js';
+import notification from '../Toast/index.js';
+import { channelsSelectors } from '../../slices/channelsSlice';
 
-const RenameModal = ({
-  activeChannel,
-  showRenameModal,
-  handleRenameClose,
-}) => {
+const RenameModal = ({ isOpen, close }) => {
+  const channels = useSelector(channelsSelectors.selectAll);
+  const channelsName = channels.map((channel) => channel.name);
+  const { activeChannelId } = useSelector((state) => state.channels);
+  const { name } = useSelector((state) => channelsSelectors.selectById(state, activeChannelId));
+
+  const api = useApi();
   const { t } = useTranslation();
 
-  const { token } = useSelector((state) => state.users);
+  const inputElem = useRef(null);
+  useEffect(() => {
+    inputElem.current.select();
+  }, []);
+
+  const validationSchema = yup.object().shape({
+    name: yup.string()
+      .required()
+      .min(3, t('errors.username'))
+      .max(20, t('errors.username'))
+      .notOneOf(channelsName, t('errors.channelName')),
+  });
 
   const formik = useFormik({
+    validationSchema,
     initialValues: {
-      name: activeChannel.name,
+      name,
     },
     onSubmit: async (values) => {
-      const editedChannel = { name: leoProfanity.clean(values.name) };
-
       try {
-        await axios.patch(`/api/v1/channels/${activeChannel.id}`, editedChannel, { headers: { Authorization: `Bearer ${token}` } });
-        socket.emit('renameChannel');
-        handleRenameClose();
-        toast.success(t('toast.renamedChannel'));
+        await api.renameChannel(activeChannelId, values);
+        notification.successToast(t('toast.channelRename'));
+        close();
       } catch (err) {
-        toast.error(t('toast.dataLoadingError'));
-        console.log(err);
+        notification.errorNotify(t('errors.network'));
       }
     },
   });
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    socket.on('renameChannel', (payload) => {
-      const channelId = payload.id;
-      const newName = payload.name;
-
-      dispatch(updateChannel({ id: channelId, changes: { name: newName } }));
-    });
-  }, [dispatch]);
-
   return (
-    <Modal
-      show={showRenameModal}
-      onHide={handleRenameClose}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
+    <Modal centered show={isOpen}>
+      <Modal.Header closeButton onHide={close}>
         <Modal.Title>{t('modals.renameModal.renameChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <Form.Group>
+          <Form.Floating className="mb-3">
             <Form.Control
-              required
-              data-testid="input-body"
               name="name"
-              onChange={formik.handleChange}
+              id="name"
+              required
+              type="text"
+              data-testid="input-body"
+              placeholder={t('modals.channelName')}
               value={formik.values.name}
+              onChange={formik.handleChange}
+              isInvalid={formik.errors.name && formik.touched.name}
+              ref={inputElem}
             />
-          </Form.Group>
-          <Form.Label
-            visuallyHidden
-            htmlFor="name"
-          >
-            {t('modals.renameModal.nameOfChannel')}
-          </Form.Label>
+            <label htmlFor="name">{t('modals.channelName')}</label>
+            <div className="invalid-tooltip">{formik.errors.name}</div>
+          </Form.Floating>
+
           <div className="d-flex justify-content-end">
             <Button
-              onClick={handleRenameClose}
-              type="button"
               className="btn-secondary mt-2 me-2"
+              type="button"
+              onClick={close}
             >
               {t('modals.buttons.cancel')}
             </Button>
             <Button
-              type="submit"
               className="btn-primary mt-2"
+              type="submit"
+              disabled={formik.isSubmitting}
             >
               {t('modals.buttons.rename')}
             </Button>
           </div>
+
         </Form>
       </Modal.Body>
     </Modal>

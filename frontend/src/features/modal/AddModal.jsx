@@ -1,88 +1,102 @@
-import React from 'react';
-import * as yup from 'yup';
-import { useSelector } from 'react-redux';
-import leoProfanity from 'leo-profanity';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { io } from 'socket.io-client';
-
-import { Form, Button, Modal } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { Modal, Button, Form } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
-const validationChannelsSchema = (channels, text) => yup.object().shape({
-  name: yup
-    .string()
-    .trim()
-    .required(text('required'))
-    .min(3, text('min'))
-    .max(20, text('max'))
-    .notOneOf(channels, text('duplicate')),
-});
+import * as yup from 'yup';
+import filter from 'leo-profanity';
 
-const socket = io();
+import useApi from '../../hooks/useApi.js';
+import notification from '../Toast/index.js';
+import { channelsSelectors, changeChannel } from '../../slices/channelsSlice';
 
-const AddModal = ({
-  showAddModal,
-  handleClose,
-}) => {
-  const { token } = useSelector((state) => state.users);
-  const { t } = useTranslation();
-  const channels = useSelector((state) => state.channels.channels);
+const AddModal = ({ isOpen, close }) => {
+  const channels = useSelector(channelsSelectors.selectAll);
   const channelsName = channels.map((channel) => channel.name);
 
+  const dispatch = useDispatch();
+  const api = useApi();
+
+  const { t } = useTranslation();
+
+  const inputElem = useRef(null);
+  useEffect(() => {
+    inputElem.current.focus();
+  }, []);
+
+  const validationSchema = yup.object().shape({
+    name: yup.string()
+      .required()
+      .min(3, t('errors.username'))
+      .max(20, t('errors.username'))
+      .notOneOf(channelsName, t('errors.channelName')),
+  });
+
   const formik = useFormik({
+    validationSchema,
     initialValues: {
       name: '',
     },
-    validationSchema: validationChannelsSchema(channelsName, t),
-    onSubmit: async (values) => {
-      const { name } = values;
-      const newChannel = { name: leoProfanity.clean(name) };
+    onSubmit: async ({ name }) => {
+      const channel = { name: filter.clean(name) };
 
       try {
-        await axios.post('/api/v1/channels', newChannel, { headers: { Authorization: `Bearer ${token}` } });
-        socket.emit('newChannel', { newChannel });
-        toast.success(t('toast.createChannel'));
-        handleClose();
-      } catch (error) {
-        toast.error(t('toast.dataLoadingError'));
+        const data = await api.createChannel(channel);
+        dispatch(changeChannel(data));
+        notification.successToast(t('toast.channelAdd'));
+        close();
+      } catch (err) {
+        notification.errorNotify(t('errors.network'));
       }
     },
   });
 
   return (
-    <Modal
-      show={showAddModal}
-      onHide={handleClose}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
+    <Modal centered show={isOpen}>
+      <Modal.Header closeButton onHide={close}>
         <Modal.Title>{t('modals.addModal.addChannel')}</Modal.Title>
       </Modal.Header>
+
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <Form.Control
-            name="name"
-            id="name"
-            type="text"
-            className="mb-2 form-control"
-            onChange={formik.handleChange}
-            value={formik.values.name}
-            isInvalid={!!formik.errors.name}
-          />
-          <Form.Control.Feedback type="invalid" tooltip>{formik.errors.name}</Form.Control.Feedback>
-          <div className="d-flex justify-content-end">
-            <Button className="me-2" variant="secondary" onClick={handleClose}>
+
+          <Form.Floating className="mb-3">
+            <Form.Control
+              name="name"
+              id="name"
+              required
+              type="text"
+              placeholder={t('modals.channelName')}
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              isInvalid={formik.errors.name && formik.touched.name}
+              ref={inputElem}
+            />
+            <label htmlFor="name">{t('modals.channelName')}</label>
+            <div className="invalid-tooltip">{formik.errors.name}</div>
+          </Form.Floating>
+
+          <div className="d-flex justify-content-end mt-3">
+            <Button
+              className="btn-secondary mt-2 me-2"
+              onClick={close}
+              type="button"
+            >
               {t('modals.buttons.cancel')}
             </Button>
-            <Button variant="primary" type="submit" onClick={formik.handleSubmit}>
+            <Button
+              className="btn-primary mt-2"
+              type="submit"
+              disabled={formik.isSubmitting}
+            >
               {t('modals.buttons.send')}
             </Button>
           </div>
+
         </Form>
       </Modal.Body>
+
     </Modal>
   );
 };

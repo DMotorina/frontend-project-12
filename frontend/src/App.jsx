@@ -10,7 +10,7 @@ import AppRoutes from './AppRoutes';
 import rollbarConfig from './rollbar/rollbarConfig';
 import { ruDict, enDict } from './locales/dict';
 import ApiProvider from './context/ApiProvider.jsx';
-import store from './store';
+import store from './slices/store';
 
 const App = async () => {
   const i18n = i18next.createInstance();

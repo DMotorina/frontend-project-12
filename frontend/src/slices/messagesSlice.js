@@ -4,7 +4,7 @@ import axios from 'axios';
 import routes from '../routes.js';
 import getAuthHeader from '../utilities/getAuthHeader.js';
 
-import { removeChannel } from './channelSlice.js';
+import { removeChannel } from './channelsSlice';
 
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',

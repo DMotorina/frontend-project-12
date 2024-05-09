@@ -1,38 +1,69 @@
-import React from 'react';
-import { Form, Button, Modal } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import {
+  Modal, FormGroup, Form, Button,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-const RemoveModal = ({
-  showRemoveModal,
-  handleRemoveClose,
-  handleRemoveChannelSubmit,
-}) => {
+import useApi from '../../hooks/useApi.js';
+import notification from '../Toast/index.js';
+import { getActiveChannelId } from '../../slices/selectors';
+
+const RemoveModal = ({ isOpen, close }) => {
+  const [disabledSumbitBtn, setDisabledSubmitBtn] = useState(false);
+  const activeChannelId = useSelector(getActiveChannelId);
+
+  const api = useApi();
   const { t } = useTranslation();
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setDisabledSubmitBtn(true);
+
+    try {
+      await api.removeChannel(activeChannelId);
+      notification.successToast(t('toast.channelRemove'));
+      close();
+    } catch (err) {
+      notification.errorNotify(t('errors.network'));
+    }
+    setDisabledSubmitBtn(false);
+  };
+
   return (
-    <Modal
-      show={showRemoveModal}
-      onHide={handleRemoveClose}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
+
+    <Modal centered show={isOpen}>
+      <Modal.Header closeButton onHide={close}>
         <Modal.Title>{t('modals.removeModal.removeChannel')}</Modal.Title>
       </Modal.Header>
+
       <Modal.Body>
-        <Form onSubmit={handleRemoveChannelSubmit}>
-          {t('modals.removeModal.areYouSure')}
+        <Form onSubmit={handleSubmit}>
+
+          <FormGroup>
+            <p className="lead">{t('modals.removeModal.areYouSure')}</p>
+          </FormGroup>
 
           <div className="d-flex justify-content-end">
-            <Button className="me-2" variant="secondary" onClick={handleRemoveClose}>
+            <Button
+              className="btn-secondary mt-2 me-2"
+              type="button"
+              onClick={close}
+            >
               {t('modals.buttons.cancel')}
             </Button>
-            <Button variant="danger" type="submit">
+            <Button
+              className="btn-danger mt-2"
+              type="submit"
+              disabled={disabledSumbitBtn}
+            >
               {t('modals.buttons.remove')}
             </Button>
           </div>
+
         </Form>
       </Modal.Body>
+
     </Modal>
   );
 };

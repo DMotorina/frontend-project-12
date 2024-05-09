@@ -1,5 +1,13 @@
 export default {
   translation: {
+    messages: {
+      counter: {
+        count_zero: '{{count}} сообщений',
+        count_one: '{{count}} сообщение',
+        count_few: '{{count}} сообщения',
+        count_many: '{{count}} сообщений',
+      },
+    },
     pages: {
       login: {
         nickname: 'Ваш ник',
@@ -53,6 +61,13 @@ export default {
       loginError: 'Неверные имя пользователя или пароль',
       userExist: 'Пользователь уже существует!',
       networkError: 'Ошибка соединения',
+      required: 'Это обязательное поле',
+      username: 'от 3 до 20 символов',
+      password: 'Не менее 6 символов',
+      confirmPassword: 'Пароли должны совпадать',
+      network: 'Ошибка соединения',
+      usernameRegistration: 'Такой пользователь уже существует',
+      channelName: 'Должно быть уникальным',
     },
     toast: {
       createChannel: 'Канал создан',

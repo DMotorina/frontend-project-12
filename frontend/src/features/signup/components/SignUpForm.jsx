@@ -1,24 +1,24 @@
-import 'react-toastify/dist/ReactToastify.css';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+
 import * as yup from 'yup';
-import { toast } from 'react-toastify';
+
 import routes from '../../../routes.js';
-import useApi from '../../../hooks/useApi.js';
+import useApi from '../../../hooks/useApi';
 import { setCredentials } from '../../../slices/usersSlice';
 
-const SignUpForm = () => {
-  const { t } = useTranslation();
-  const api = useApi();
-
+const SignupForm = () => {
   const [validated, setValidated] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const api = useApi();
+
+  const { t } = useTranslation();
 
   const inputUsernameElem = useRef(null);
   useEffect(() => {
@@ -27,16 +27,16 @@ const SignUpForm = () => {
 
   const validationSchema = yup.object().shape({
     username: yup.string()
-      .required('Это обязательное поле')
+      .required(t('errors.required'))
       .trim()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов'),
+      .min(3, t('errors.username'))
+      .max(20, t('errors.username')),
     password: yup.string()
-      .required('Это обязательное поле')
-      .min(6, 'Минимум 6 символов'),
+      .required(t('errors.required'))
+      .min(6, t('errors.password')),
     confirmPassword: yup.string()
-      .required('Это обязательное поле')
-      .oneOf([yup.ref('password'), null], 'Пароли должны совпадать'),
+      .required(t('errors.required'))
+      .oneOf([yup.ref('password'), null], t('errors.confirmPassword')),
   });
 
   const formik = useFormik({
@@ -53,8 +53,7 @@ const SignUpForm = () => {
         const res = await api.signupUser(values);
         dispatch(setCredentials(res));
         navigate(routes.chatPage());
-      } catch (e) {
-        toast.error(t('toast.dataLoadingError'));
+      } catch (err) {
         setValidated(true);
       }
     },
@@ -63,6 +62,7 @@ const SignUpForm = () => {
   return (
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
       <h1 className="text-center mb-4">{t('pages.signup.registration')}</h1>
+
       <Form.Floating className="mb-3">
         <Form.Control
           name="username"
@@ -82,8 +82,6 @@ const SignUpForm = () => {
         <Form.Control
           name="password"
           id="password"
-          autoComplete="current-password"
-          required
           type="password"
           placeholder={t('pages.signup.password')}
           value={formik.values.password}
@@ -104,18 +102,18 @@ const SignUpForm = () => {
           onChange={formik.handleChange}
           isInvalid={(formik.errors.confirmPassword && formik.touched.confirmPassword) || validated}
         />
-        <Form.Label htmlFor="username">{t('pages.signup.checkPassword')}</Form.Label>
+        <Form.Label htmlFor="confirmPassword">{t('pages.signup.checkPassword')}</Form.Label>
 
         {formik.errors.confirmPassword && formik.touched.confirmPassword
           ? (<Form.Control.Feedback type="invalid" tooltip>{formik.errors.confirmPassword}</Form.Control.Feedback>)
-          : (<Form.Control.Feedback type="invalid" tooltip>{t('errors.userExist')}</Form.Control.Feedback>)}
+          : (<Form.Control.Feedback type="invalid" tooltip>{t('errors.usernameRegistration')}</Form.Control.Feedback>)}
       </Form.Floating>
 
       <Button
-        disabled={formik.isSubmitting}
+        className="w-100 mb-3"
         variant="outline-primary"
         type="submit"
-        className="w-100 mb-3"
+        disabled={formik.isSubmitting}
       >
         {t('pages.signup.register')}
       </Button>
@@ -123,4 +121,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignupForm;
