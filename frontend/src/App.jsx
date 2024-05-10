@@ -15,6 +15,9 @@ import { ruDict, enDict } from './locales/dict';
 import ApiProvider from './context/ApiProvider.jsx';
 import store from './slices/store';
 
+import Modal from './features/modal/Modal';
+import Toast from './features/toast/Toast';
+
 import {
   addChannel, removeChannel, changeChannel, updateChannel,
 } from './slices/channelsSlice.js';
@@ -63,6 +66,8 @@ const App = async () => {
           <I18nextProvider i18n={i18n}>
             <ApiProvider>
               <AppRoutes />
+              <Toast />
+              <Modal />
             </ApiProvider>
           </I18nextProvider>
         </Provider>

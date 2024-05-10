@@ -6,7 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import useApi from '../../hooks/useApi.js';
-import notification from '../Toast/index.js';
+import notification from '../toast/index.js';
 import { getActiveChannelId } from '../../slices/selectors';
 
 const RemoveModal = ({ isOpen, close }) => {

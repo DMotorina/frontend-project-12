@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
 import useApi from '../../hooks/useApi.js';
-import notification from '../Toast/index.js';
+import notification from '../toast/index.js';
 import { channelsSelectors } from '../../slices/channelsSlice';
 
 const RenameModal = ({ isOpen, close }) => {
@@ -62,13 +62,13 @@ const RenameModal = ({ isOpen, close }) => {
               required
               type="text"
               data-testid="input-body"
-              placeholder={t('modals.channelName')}
+              placeholder={t('modals.renameModal.nameOfChannel')}
               value={formik.values.name}
               onChange={formik.handleChange}
               isInvalid={formik.errors.name && formik.touched.name}
               ref={inputElem}
             />
-            <label htmlFor="name">{t('modals.channelName')}</label>
+            <label htmlFor="name">{t('modals.renameModal.nameOfChannel')}</label>
             <div className="invalid-tooltip">{formik.errors.name}</div>
           </Form.Floating>
 

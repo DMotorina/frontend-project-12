@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 
 import filter from 'leo-profanity';
 
-import notification from '../../../Toast/index.js';
+import notification from '../../../toast/index.js';
 import send from '../../../../assets/send.svg';
 import useApi from '../../../../hooks/useApi.js';
 

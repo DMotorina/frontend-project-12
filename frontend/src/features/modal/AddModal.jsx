@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import filter from 'leo-profanity';
 
 import useApi from '../../hooks/useApi.js';
-import notification from '../Toast/index.js';
+import notification from '../toast/index.js';
 import { channelsSelectors, changeChannel } from '../../slices/channelsSlice.js';
 
 const AddModal = ({ isOpen, close }) => {
@@ -67,13 +67,13 @@ const AddModal = ({ isOpen, close }) => {
               id="name"
               required
               type="text"
-              placeholder={t('modals.channelName')}
+              placeholder={t('modals.renameModal.nameOfChannel')}
               value={formik.values.name}
               onChange={formik.handleChange}
               isInvalid={formik.errors.name && formik.touched.name}
               ref={inputElem}
             />
-            <label htmlFor="name">{t('modals.channelName')}</label>
+            <label htmlFor="name">{t('modals.renameModal.nameOfChannel')}</label>
             <div className="invalid-tooltip">{formik.errors.name}</div>
           </Form.Floating>
 
