@@ -9,7 +9,7 @@ import filter from 'leo-profanity';
 
 import useApi from '../../hooks/useApi.js';
 import notification from '../Toast/index.js';
-import { channelsSelectors, changeChannel } from '../../slices/channelsSlice';
+import { channelsSelectors, changeChannel } from '../../slices/channelsSlice.js';
 
 const AddModal = ({ isOpen, close }) => {
   const channels = useSelector(channelsSelectors.selectAll);

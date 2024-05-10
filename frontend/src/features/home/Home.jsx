@@ -24,8 +24,6 @@ const Home = () => {
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
       <Row className="h-100 bg-white flex-md-row">
         <Col className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
-
-          {/* <ChannelComponent /> */}
           {channelsLoadStatus !== 'loaded'
             ? <Spinner />
             : <ChannelComponent />}

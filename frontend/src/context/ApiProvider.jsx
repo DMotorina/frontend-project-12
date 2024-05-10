@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import axios from 'axios';
 
-import routes from '../routes';
-import getAuthHeader from '../utilities/getAuthHeader';
+import routes from '../routes.js';
+import getAuthHeader from '../utilities/getAuthHeader.js';
 import ApiContext from './ApiContext';
 
 const ApiProvider = ({ children }) => {

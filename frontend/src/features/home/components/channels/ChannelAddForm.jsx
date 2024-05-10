@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { setModalShow } from '../../../../slices/modalSlice';
+import { setModalShow } from '../../../../slices/modalSlice.js';
 import image from '../../../../assets/button.svg';
 
 const ChannelAddForm = () => {
