@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { Modal, Button, Form } from 'react-bootstrap';
+import {
+  FormLabel, FormGroup, FormControl, Modal, Button, Form,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 import * as yup from 'yup';
-import filter from 'leo-profanity';
+import leoProfanity from 'leo-profanity';
 
 import useApi from '../../hooks/useApi.js';
 import notification from '../toast/index.js';
@@ -38,11 +40,12 @@ const AddModal = ({ isOpen, close }) => {
     initialValues: {
       name: '',
     },
-    onSubmit: async ({ name }) => {
-      const channel = { name: filter.clean(name) };
+    onSubmit: async (values) => {
+      const { name } = values;
+      const cleanedName = leoProfanity.clean(name);
 
       try {
-        const data = await api.createChannel(channel);
+        const data = await api.createChannel(cleanedName);
         dispatch(changeChannel(data));
         notification.successToast(t('toast.channelAdd'));
         close();
@@ -60,40 +63,39 @@ const AddModal = ({ isOpen, close }) => {
 
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-
-          <Form.Floating className="mb-3">
+          <FormGroup>
             <Form.Control
+              className="mb-2"
               name="name"
               id="name"
-              required
-              type="text"
-              placeholder={t('modals.renameModal.nameOfChannel')}
+              required=""
               value={formik.values.name}
               onChange={formik.handleChange}
-              isInvalid={formik.errors.name && formik.touched.name}
+              isInvalid={!!formik.errors.name}
               ref={inputElem}
             />
-            <label htmlFor="name">{t('modals.renameModal.nameOfChannel')}</label>
-            <div className="invalid-tooltip">{formik.errors.name}</div>
-          </Form.Floating>
+            <FormLabel htmlFor="name" className="visually-hidden">{t('modals.renameModal.nameOfChannel')}</FormLabel>
+            <FormControl.Feedback type="invalid">
+              {formik.errors.name}
+            </FormControl.Feedback>
 
-          <div className="d-flex justify-content-end mt-3">
-            <Button
-              className="btn-secondary mt-2 me-2"
-              onClick={close}
-              type="button"
-            >
-              {t('modals.buttons.cancel')}
-            </Button>
-            <Button
-              className="btn-primary mt-2"
-              type="submit"
-              disabled={formik.isSubmitting}
-            >
-              {t('modals.buttons.send')}
-            </Button>
-          </div>
-
+            <Modal.Footer>
+              <Button
+                className="secondary"
+                onClick={close}
+                type="button"
+              >
+                {t('modals.buttons.cancel')}
+              </Button>
+              <Button
+                className="primary"
+                type="submit"
+                disabled={formik.isSubmitting}
+              >
+                {t('modals.buttons.send')}
+              </Button>
+            </Modal.Footer>
+          </FormGroup>
         </Form>
       </Modal.Body>
 
