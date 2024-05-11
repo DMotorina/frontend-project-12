@@ -1,14 +1,16 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { useFormik } from 'formik';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
 
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Modal, Button, Form } from 'react-bootstrap';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import useApi from '../../hooks/useApi.js';
-import notification from '../toast/index.js';
 import { channelsSelectors } from '../../slices/channelsSlice';
+
+import useApi from '../../hooks/useApi';
+
+import notification from '../toast/index';
 
 const RenameModal = ({ isOpen, close }) => {
   const channels = useSelector(channelsSelectors.selectAll);

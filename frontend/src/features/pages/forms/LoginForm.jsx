@@ -1,14 +1,18 @@
 import 'react-toastify/dist/ReactToastify.css';
+
 import React, { useState, useRef, useEffect } from 'react';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import useApi from '../../../../hooks/useApi.js';
 
-import { setCredentials } from '../../../../slices/usersSlice';
-import routes from '../../../../utilities/routes.js';
+import { setCredentials } from '../../../slices/usersSlice';
+
+import useApi from '../../../hooks/useApi';
+
+import routes from '../../../utilities/routes';
 
 const LoginForm = () => {
   const { t } = useTranslation();

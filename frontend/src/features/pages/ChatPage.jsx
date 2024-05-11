@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Container, Col } from 'react-bootstrap';
 
-import { fetchMessages } from '../../../slices/messagesSlice';
-import { fetchChannels } from '../../../slices/channelsSlice';
+import { fetchMessages } from '../../slices/messagesSlice';
+import { fetchChannels } from '../../slices/channelsSlice';
 
-import MessageComponent from './components/messages/MessageComponent';
-import ChannelComponent from './components/channels/ChannelComponent';
-import Spinner from '../../spinner/Spinner';
+import MessageComponent from '../chatComponents/messages/MessageComponent';
+import ChannelComponent from '../chatComponents/channels/ChannelComponent';
 
-const Home = () => {
+import Spinner from '../spinner/Spinner';
+
+const ChatPage = () => {
   const channelsLoadStatus = useSelector((state) => state.channels.status);
   const messagesLoadStatus = useSelector((state) => state.messages.status);
 
@@ -40,4 +42,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ChatPage;

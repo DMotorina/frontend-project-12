@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import { useDispatch } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-
 import * as yup from 'yup';
 
-import routes from '../../../../utilities/routes.js';
-import useApi from '../../../../hooks/useApi';
-import { setCredentials } from '../../../../slices/usersSlice';
+import { setCredentials } from '../../../slices/usersSlice';
+
+import useApi from '../../../hooks/useApi';
+
+import routes from '../../../utilities/routes';
 
 const SignupForm = () => {
   const [validated, setValidated] = useState(false);

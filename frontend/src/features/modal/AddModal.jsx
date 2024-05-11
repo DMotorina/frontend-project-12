@@ -1,17 +1,20 @@
 import React, { useEffect, useRef } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import {
   FormLabel, FormGroup, FormControl, Modal, Button, Form,
 } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { useFormik } from 'formik';
 
 import * as yup from 'yup';
 import filter from 'leo-profanity';
 
-import useApi from '../../hooks/useApi.js';
-import notification from '../toast/index.js';
-import { channelsSelectors, changeChannel } from '../../slices/channelsSlice.js';
+import { channelsSelectors, changeChannel } from '../../slices/channelsSlice';
+
+import useApi from '../../hooks/useApi';
+
+import notification from '../toast/index';
 
 const AddModal = ({ isOpen, close }) => {
   const channels = useSelector(channelsSelectors.selectAll);

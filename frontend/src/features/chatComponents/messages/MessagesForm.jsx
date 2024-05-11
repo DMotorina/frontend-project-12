@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from 'react';
+
 import { useSelector } from 'react-redux';
-import { Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 
 import filter from 'leo-profanity';
 
-import notification from '../../../../toast/index';
-import send from '../../../../../assets/icons/send.svg';
-import useApi from '../../../../../hooks/useApi';
+import notification from '../../toast/index';
+import sendIcon from '../../../assets/icons/send.svg';
+import useApi from '../../../hooks/useApi';
 
 const MessagesForm = () => {
   const { username } = useSelector((state) => state.user);
@@ -60,7 +61,7 @@ const MessagesForm = () => {
             type="submit"
             className="btn btn-group-vertical"
           >
-            <img src={send} alt="Отправить сообщение" />
+            <img src={sendIcon} alt="Отправить сообщение" />
             <span className="visually-hidden">{t('modals.buttons.send')}</span>
           </button>
         </div>

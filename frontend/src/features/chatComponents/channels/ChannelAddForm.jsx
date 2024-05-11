@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'react-bootstrap';
 
-import { setModalShow } from '../../../../../slices/modalSlice';
-import plus from '../../../../../assets/icons/plus.svg';
+import { setModalShow } from '../../../slices/modalSlice';
+
+import plusIcon from '../../../assets/icons/plus.svg';
 
 const ChannelAddForm = () => {
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const ChannelAddForm = () => {
         type="button"
         onClick={handleAddChannel('adding')}
       >
-        <img src={plus} alt="Добавить канал" />
+        <img src={plusIcon} alt="Добавить канал" />
         <span className="visually-hidden">+</span>
       </Button>
     </div>

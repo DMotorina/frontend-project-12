@@ -1,10 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
 
-import { setModalShow } from '../../../../../slices/modalSlice';
-import { getActiveChannelId } from '../../../../../slices/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
+
+import { getActiveChannelId } from '../../../slices/selectors';
+import { setModalShow } from '../../../slices/modalSlice';
 
 const RemovableChannel = ({ id, name, changeChannel }) => {
   const activeChannelId = useSelector(getActiveChannelId);

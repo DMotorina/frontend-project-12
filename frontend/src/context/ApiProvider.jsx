@@ -1,9 +1,10 @@
 import React, { useMemo } from 'react';
 import axios from 'axios';
 
-import routes from '../utilities/routes.js';
-import getAuthHeader from '../utilities/getAuthHeader.js';
 import ApiContext from './ApiContext';
+
+import routes from '../utilities/routes';
+import getAuthHeader from '../utilities/getAuthHeader';
 
 const ApiProvider = ({ children }) => {
   const createChannel = async (channel) => {

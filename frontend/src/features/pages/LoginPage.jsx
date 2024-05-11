@@ -1,15 +1,18 @@
 import React from 'react';
+
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Row, Container, Col, Card, Image,
 } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
-import routes from '../../../utilities/routes';
-import LoginForm from './components/LoginForm';
 
-import logo from '../../../assets/images/login.jpeg';
+import routes from '../../utilities/routes';
 
-const Login = () => {
+import LoginForm from './forms/LoginForm';
+
+import logoImg from '../../assets/images/login.jpeg';
+
+const LoginPage = () => {
   const { t } = useTranslation();
 
   return (
@@ -18,7 +21,7 @@ const Login = () => {
         <Col className="col-12 col-md-8 col-xxl-6">
           <Card className="shadow-sm">
             <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
-              <Image src={logo} roundedCircle alt="Войти" />
+              <Image src={logoImg} roundedCircle alt="Войти" />
               <LoginForm />
             </Card.Body>
             <Card.Footer className="p-4">
@@ -34,4 +37,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

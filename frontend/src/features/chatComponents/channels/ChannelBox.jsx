@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { channelsSelectors, changeChannel } from '../../../slices/channelsSlice';
+
 import DefaultChannel from './DefaultChannel';
 import RemovableChannel from './RemovableChannel';
-
-import { channelsSelectors, changeChannel } from '../../../../../slices/channelsSlice';
 
 const ChannelBox = () => {
   const channels = useSelector(channelsSelectors.selectAll);
