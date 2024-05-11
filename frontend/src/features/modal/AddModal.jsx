@@ -79,22 +79,22 @@ const AddModal = ({ isOpen, close }) => {
               {formik.errors.name}
             </FormControl.Feedback>
 
-            <Modal.Footer>
+            <div className="d-flex justify-content-end">
               <Button
-                className="me-2 btn btn-secondary"
+                className="mt-2 me-2 btn btn-secondary"
                 onClick={close}
                 type="button"
               >
                 {t('modals.buttons.cancel')}
               </Button>
               <Button
-                className="btn btn-primary"
+                className="btn btn-primary mt-2"
                 type="submit"
                 disabled={formik.isSubmitting}
               >
                 {t('modals.buttons.send')}
               </Button>
-            </Modal.Footer>
+            </div>
           </FormGroup>
         </Form>
       </Modal.Body>
