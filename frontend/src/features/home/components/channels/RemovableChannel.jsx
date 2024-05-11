@@ -33,7 +33,7 @@ const RemovableChannel = ({ id, name, changeChannel }) => {
         split
         variant={isCurrent}
       >
-        <span className="visually-hidden">{t('buttons.channels.control')}</span>
+        <span className="visually-hidden">{t('buttons.control')}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item onClick={handleModalShow('removing')}>{t('modals.buttons.remove')}</Dropdown.Item>

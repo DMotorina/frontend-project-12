@@ -56,6 +56,7 @@ export default {
     buttons: {
       enter: 'Войти',
       exit: 'Выйти',
+      control: 'Управление каналом',
     },
     errors: {
       loginError: 'Неверные имя пользователя или пароль',
