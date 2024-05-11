@@ -8,11 +8,11 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 import i18next from 'i18next';
 import { io } from 'socket.io-client';
 
-import resources from './locales/index.js';
+import resources from './locales/index';
 import AppRoutes from './AppRoutes';
 import rollbarConfig from './rollbar/rollbarConfig';
 import { ruDict, enDict } from './locales/dict';
-import ApiProvider from './context/ApiProvider.jsx';
+import ApiProvider from './context/ApiProvider';
 import store from './slices/store';
 
 import Modal from './features/modal/Modal';
@@ -20,8 +20,8 @@ import Toast from './features/toast/Toast';
 
 import {
   addChannel, removeChannel, changeChannel, updateChannel,
-} from './slices/channelsSlice.js';
-import { addMessage } from './slices/messagesSlice.js';
+} from './slices/channelsSlice';
+import { addMessage } from './slices/messagesSlice';
 
 const App = async () => {
   const i18n = i18next.createInstance();

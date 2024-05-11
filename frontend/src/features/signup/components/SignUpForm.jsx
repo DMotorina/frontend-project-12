@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import * as yup from 'yup';
 
-import routes from '../../../routes.js';
+import routes from '../../../utilities/routes.js';
 import useApi from '../../../hooks/useApi';
 import { setCredentials } from '../../../slices/usersSlice';
 

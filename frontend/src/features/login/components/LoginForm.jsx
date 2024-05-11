@@ -8,7 +8,7 @@ import { useFormik } from 'formik';
 import useApi from '../../../hooks/useApi.js';
 
 import { setCredentials } from '../../../slices/usersSlice';
-import routes from '../../../routes.js';
+import routes from '../../../utilities/routes.js';
 
 const LoginForm = () => {
   const { t } = useTranslation();

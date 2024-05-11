@@ -1,5 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css';
-
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -12,7 +10,7 @@ import Home from './features/home/Home';
 import Login from './features/login/Login';
 import NotFound from './features/404/NotFound';
 import Signup from './features/signup/Signup';
-import routes from './routes';
+import routes from './utilities/routes';
 
 const PrivateRoute = ({ children }) => {
   const { token } = useSelector((state) => state.user);

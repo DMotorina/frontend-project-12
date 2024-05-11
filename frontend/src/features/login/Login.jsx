@@ -4,7 +4,7 @@ import {
   Row, Container, Col, Card, Image,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import routes from '../../routes';
+import routes from '../../utilities/routes';
 import LoginForm from './components/LoginForm';
 
 import logo from '../../assets/images/login.jpeg';

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import axios from 'axios';
 
-import routes from '../routes.js';
+import routes from '../utilities/routes.js';
 import getAuthHeader from '../utilities/getAuthHeader.js';
 import ApiContext from './ApiContext';
 
