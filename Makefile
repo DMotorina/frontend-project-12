@@ -10,7 +10,7 @@ start-backend:
 start:
 	make start-backend
 
-local-start:
+start:
 	make start-backend & make start-frontend
 
 build:
