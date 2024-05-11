@@ -33,15 +33,18 @@ const messagesSlice = createSlice({
         messagesAdapter.setAll(state, restMessages);
       })
       .addCase(fetchMessages.pending, (state) => {
-        state.status = 'pending';
+        const newState = state;
+        newState.status = 'pending';
       })
       .addCase(fetchMessages.fulfilled, (state, action) => {
+        const newState = state;
         messagesAdapter.setAll(state, action.payload);
-        state.status = 'loaded';
+        newState.status = 'loaded';
       })
       .addCase(fetchMessages.rejected, (state, action) => {
-        state.status = 'error';
-        state.error = action.error;
+        const newState = state;
+        newState.status = 'error';
+        newState.error = action.error;
       });
   },
 });

@@ -28,22 +28,27 @@ const channelsSlice = createSlice({
     removeChannel: channelsAdapter.removeOne,
     updateChannel: channelsAdapter.updateOne,
     changeChannel: (state, action) => {
+      const newState = state;
       const { id } = action.payload;
-      state.activeChannelId = id;
+
+      newState.activeChannelId = id;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannels.pending, (state) => {
-        state.status = 'pending';
+        const newState = state;
+        newState.status = 'pending';
       })
       .addCase(fetchChannels.fulfilled, (state, action) => {
+        const newState = state;
         channelsAdapter.setAll(state, action.payload);
-        state.status = 'loaded';
+        newState.status = 'loaded';
       })
       .addCase(fetchChannels.rejected, (state, action) => {
-        state.status = 'error';
-        state.error = action.error;
+        const newState = state;
+        newState.status = 'error';
+        newState.error = action.error;
       });
   },
 });
