@@ -7,7 +7,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import * as yup from 'yup';
-import leoProfanity from 'leo-profanity';
+import filter from 'leo-profanity';
 
 import useApi from '../../hooks/useApi.js';
 import notification from '../toast/index.js';
@@ -40,14 +40,13 @@ const AddModal = ({ isOpen, close }) => {
     initialValues: {
       name: '',
     },
-    onSubmit: async (values) => {
-      const { name } = values;
-      const cleanedName = leoProfanity.clean(name);
+    onSubmit: async ({ name }) => {
+      const channel = { name: filter.clean(name) };
 
       try {
-        const data = await api.createChannel(cleanedName);
+        const data = await api.createChannel(channel);
         dispatch(changeChannel(data));
-        notification.successToast(t('toast.channelAdd'));
+        notification.successToast(t('toast.createChannel'));
         close();
       } catch (err) {
         notification.errorNotify(t('errors.network'));
@@ -68,10 +67,11 @@ const AddModal = ({ isOpen, close }) => {
               className="mb-2"
               name="name"
               id="name"
-              required=""
+              required
+              type="text"
               value={formik.values.name}
               onChange={formik.handleChange}
-              isInvalid={!!formik.errors.name}
+              isInvalid={formik.errors.name && formik.touched.name}
               ref={inputElem}
             />
             <FormLabel htmlFor="name" className="visually-hidden">{t('modals.renameModal.nameOfChannel')}</FormLabel>

@@ -40,7 +40,7 @@ const RenameModal = ({ isOpen, close }) => {
     onSubmit: async (values) => {
       try {
         await api.renameChannel(activeChannelId, values);
-        notification.successToast(t('toast.channelRename'));
+        notification.successToast(t('toast.renamedChannel'));
         close();
       } catch (err) {
         notification.errorNotify(t('errors.network'));

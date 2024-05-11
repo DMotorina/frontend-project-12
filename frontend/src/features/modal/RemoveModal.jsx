@@ -22,7 +22,7 @@ const RemoveModal = ({ isOpen, close }) => {
 
     try {
       await api.removeChannel(activeChannelId);
-      notification.successToast(t('toast.channelRemove'));
+      notification.successToast(t('toast.removeChannel'));
       close();
     } catch (err) {
       notification.errorNotify(t('errors.network'));
