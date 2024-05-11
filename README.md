@@ -6,6 +6,8 @@
 ## Description
 Hexlet Chat is similar to Slack chat (very simplified version)
 
+Communication is divided into channels. Each channel is a separate chat where users can communicate with each other. On the left, you'll see a full list of available channels you can join. You can also create your own channel. By default, you are automatically added to #general. This is a common channel for communication between all users. In the messages section you will be able to send private messages to other people who are registered in our chat. A list of your most recent conversations will be displayed here.
+
 ## Requirements
 The minimum version of node.js - 13.2.0
 
