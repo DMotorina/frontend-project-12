@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { Button } from 'react-bootstrap';
 
 import { setModalShow } from '../../../../slices/modalSlice.js';
-import image from '../../../../assets/button.svg';
+import plus from '../../../../assets/icons/plus.svg';
 
 const ChannelAddForm = () => {
   const dispatch = useDispatch();
@@ -16,14 +17,15 @@ const ChannelAddForm = () => {
   return (
     <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
       <b>{t('pages.chat.channels')}</b>
-      <button
-        className="p-0 text-primary btn btn-group-vertical"
+      <Button
+        variant="group-vertical"
+        className="p-0 text-primary"
         type="button"
         onClick={handleAddChannel('adding')}
       >
-        <img src={image} alt="Добавить канал" />
+        <img src={plus} alt="Добавить канал" />
         <span className="visually-hidden">+</span>
-      </button>
+      </Button>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-import image from '../../assets/img/signup-img.jpg';
+import signup from '../../assets/images/signup.jpg';
 
 import SignUpForm from './components/SignUpForm';
 
@@ -17,7 +17,7 @@ const Signup = () => {
         <Col className="col-12 col-md-8 col-xxl-6">
           <Card className="shadow-sm">
             <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
-              <Image src={image} roundedCircle alt={t('pages.signup.register')} />
+              <Image src={signup} roundedCircle alt={t('pages.signup.register')} />
               <SignUpForm />
             </Card.Body>
           </Card>

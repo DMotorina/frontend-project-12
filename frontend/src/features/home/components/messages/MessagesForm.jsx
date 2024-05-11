@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import filter from 'leo-profanity';
 
 import notification from '../../../toast/index.js';
-import send from '../../../../assets/send.svg';
+import send from '../../../../assets/icons/send.svg';
 import useApi from '../../../../hooks/useApi.js';
 
 const MessagesForm = () => {
