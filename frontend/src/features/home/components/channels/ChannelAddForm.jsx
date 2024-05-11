@@ -22,7 +22,7 @@ const ChannelAddForm = () => {
         onClick={handleAddChannel('adding')}
       >
         <img src={image} alt="Добавить канал" />
-        <span className="visually-hidden">add</span>
+        <span className="visually-hidden">+</span>
       </button>
     </div>
   );
