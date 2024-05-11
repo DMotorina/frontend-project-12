@@ -41,5 +41,5 @@ make install
 
 ### Start
 ```
-make start
+make local-start
 ```
