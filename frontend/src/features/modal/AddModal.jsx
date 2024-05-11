@@ -81,14 +81,14 @@ const AddModal = ({ isOpen, close }) => {
 
             <Modal.Footer>
               <Button
-                className="secondary"
+                className="me-2 btn btn-secondary"
                 onClick={close}
                 type="button"
               >
                 {t('modals.buttons.cancel')}
               </Button>
               <Button
-                className="primary"
+                className="btn btn-primary"
                 type="submit"
                 disabled={formik.isSubmitting}
               >
