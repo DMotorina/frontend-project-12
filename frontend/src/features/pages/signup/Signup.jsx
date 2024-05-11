@@ -1,15 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import {
   Row, Container, Col, Card, Image,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import routes from '../../utilities/routes';
-import LoginForm from './components/LoginForm';
 
-import logo from '../../assets/images/login.jpeg';
+import signup from '../../../assets/images/signup.jpg';
 
-const Login = () => {
+import SignUpForm from './components/SignUpForm';
+
+const Signup = () => {
   const { t } = useTranslation();
 
   return (
@@ -18,15 +17,9 @@ const Login = () => {
         <Col className="col-12 col-md-8 col-xxl-6">
           <Card className="shadow-sm">
             <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
-              <Image src={logo} roundedCircle alt="Войти" />
-              <LoginForm />
+              <Image src={signup} roundedCircle alt={t('pages.signup.register')} />
+              <SignUpForm />
             </Card.Body>
-            <Card.Footer className="p-4">
-              <div className="text-center">
-                <span>{t('pages.login.noExistingAccount')}</span>
-                <Link to={routes.signupPage()}>{t('pages.login.registration')}</Link>
-              </div>
-            </Card.Footer>
           </Card>
         </Col>
       </Row>
@@ -34,4 +27,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

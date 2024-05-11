@@ -6,10 +6,10 @@ import {
 import { ToastContainer } from 'react-toastify';
 
 import Header from './features/header/Header';
-import Home from './features/home/Home';
-import Login from './features/login/Login';
-import NotFound from './features/404/NotFound';
-import Signup from './features/signup/Signup';
+import Home from './features/pages/home/Home';
+import Login from './features/pages/login/Login';
+import NotFound from './features/pages/404/NotFound';
+import Signup from './features/pages/signup/Signup';
 import routes from './utilities/routes';
 
 const PrivateRoute = ({ children }) => {

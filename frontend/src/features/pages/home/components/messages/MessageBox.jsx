@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-import { messagesSelectors } from '../../../../slices/messagesSlice';
-import { getActiveChannelId, getChannelMessages } from '../../../../slices/selectors';
+import { messagesSelectors } from '../../../../../slices/messagesSlice';
+import { getActiveChannelId, getChannelMessages } from '../../../../../slices/selectors';
 
 import Message from './Message';
 

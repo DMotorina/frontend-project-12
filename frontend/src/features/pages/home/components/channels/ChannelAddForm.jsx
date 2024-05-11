@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'react-bootstrap';
 
-import { setModalShow } from '../../../../slices/modalSlice.js';
-import plus from '../../../../assets/icons/plus.svg';
+import { setModalShow } from '../../../../../slices/modalSlice';
+import plus from '../../../../../assets/icons/plus.svg';
 
 const ChannelAddForm = () => {
   const dispatch = useDispatch();

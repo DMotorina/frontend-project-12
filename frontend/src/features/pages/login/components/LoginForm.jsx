@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import useApi from '../../../hooks/useApi.js';
+import useApi from '../../../../hooks/useApi.js';
 
-import { setCredentials } from '../../../slices/usersSlice';
-import routes from '../../../utilities/routes.js';
+import { setCredentials } from '../../../../slices/usersSlice';
+import routes from '../../../../utilities/routes.js';
 
 const LoginForm = () => {
   const { t } = useTranslation();

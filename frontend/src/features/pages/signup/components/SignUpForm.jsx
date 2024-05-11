@@ -7,9 +7,9 @@ import { useTranslation } from 'react-i18next';
 
 import * as yup from 'yup';
 
-import routes from '../../../utilities/routes.js';
-import useApi from '../../../hooks/useApi';
-import { setCredentials } from '../../../slices/usersSlice';
+import routes from '../../../../utilities/routes.js';
+import useApi from '../../../../hooks/useApi';
+import { setCredentials } from '../../../../slices/usersSlice';
 
 const SignupForm = () => {
   const [validated, setValidated] = useState(false);

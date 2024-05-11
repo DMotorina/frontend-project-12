@@ -2,9 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { messagesSelectors } from '../../../../slices/messagesSlice';
-import { channelsSelectors } from '../../../../slices/channelsSlice';
-import { getActiveChannelId, getChannelMessages } from '../../../../slices/selectors';
+import { messagesSelectors } from '../../../../../slices/messagesSlice';
+import { channelsSelectors } from '../../../../../slices/channelsSlice';
+import { getActiveChannelId, getChannelMessages } from '../../../../../slices/selectors';
 
 const MessagesHeader = () => {
   const { t } = useTranslation();
